@@ -93,11 +93,7 @@ class _CityPlacesPageState extends State<CityPlacesPage> {
                child: Card(
 child: Column(
   children: [
-    Container(
-      height: 100,
-      width:100,
-      color: Colors.blue,
-    ),
+   Image.network(e.landing.toString()),
     Text(e.intro.toString())
   ],
 ),
@@ -107,6 +103,7 @@ child: Column(
 
              ),
              onTap: (){
+                 print(e.landing.toString());
                Navigator.push(
                  context,
                  MaterialPageRoute(builder: (context) =>  PlacePage(title: "Place Detail", full: e.full, alternative: e.alternative, landing: e.landing)),

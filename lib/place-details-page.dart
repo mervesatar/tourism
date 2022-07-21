@@ -25,15 +25,18 @@ class PlacePage extends StatefulWidget {
 }
 
 class _PlacePageState extends State<PlacePage> {
-
+int _index=0;
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   late String password;
   late String username;
   final url='http://192.168.43.46:5000/rest/places';
+List<dynamic> links=[];
 
   @override
   void initState()  {
+    links.add(widget.landing);
+links.addAll(widget.alternative);
 
     super.initState();
   }
@@ -56,22 +59,38 @@ class _PlacePageState extends State<PlacePage> {
       body: Center(
 
                         child:  Card(
-                          child: Container(
-                            height: 300,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.0),
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(widget.landing.toString()))),
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                  widget.full.toString(),
-                                  style: TextStyle(color: Colors.black, fontSize: 15)),
-                            ),
-                          ),
-                          margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 5.0),
+                         child: Column(
+                            children: [
+
+                            SizedBox(
+                            height: 200, // card height
+                            child: PageView.builder(
+    itemCount: widget.alternative.length+1,
+    controller: PageController(viewportFraction: 0.7),
+    onPageChanged: (int index) => setState(() => _index = index),
+    itemBuilder: (_, i) {
+    return Transform.scale(
+    scale: i == _index ? 1 : 0.9,
+    child: Card(
+    elevation: 6,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    child: Center(
+    child: Image.network(
+links[i].toString()
+    ),
+    ),
+    ),
+    );
+    },
+    ),
+    ),
+
+                              Text(widget.full.toString())
+
+                            ],
+                          )
+
+
                         ),
 
 
